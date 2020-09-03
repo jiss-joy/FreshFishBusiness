@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4sp">
+
+    <TextView
+        android:id="@+id/select_fish_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/architects_daughter"
+        android:text="Fish Name"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:padding="4sp"
+        android:layout_marginStart="10sp"
+        android:layout_margin="4sp"/>
+
+</androidx.cardview.widget.CardView>
