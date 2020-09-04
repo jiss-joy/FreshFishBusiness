@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ferfalk.simplesearchview.SimpleSearchView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,8 +31,7 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
 
     private FloatingActionButton addNewFishBTN;
     private RecyclerView marketRecycler;
-    private SimpleSearchView searchView;
-
+    private Toolbar toolbar;
 
 
     private FirebaseFirestore db;
@@ -61,31 +60,33 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
     private void setUpToolbar() {
+        toolbar.inflateMenu(R.menu.menu_market_toolbar);
 
-//        toolbar.inflateMenu(R.menu.menu_toolbar);
-//        Menu menu = toolbar.getMenu();
-//        MenuItem menuItem = menu.findItem(R.id.menu_search_item);
-//        searchView = (SimpleSearchView) menuItem.getActionView();
-//
-//        searchView.setOnQueryTextListener(new SimpleSearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                mAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextCleared() {
-//                return false;
-//            }
-//        });
+        Menu menu = toolbar.getMenu();
 
+        MenuItem menuItem = menu.findItem(R.id.toolbar_search);
+
+        SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
 
@@ -117,6 +118,7 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
     private void initValues(View view) {
         addNewFishBTN = (FloatingActionButton) view.findViewById(R.id.add_new_fish_btn);
         marketRecycler = (RecyclerView) view.findViewById(R.id.market_recycler);
+        toolbar = (Toolbar) view.findViewById(R.id.market_toolbar);
 
         db = FirebaseFirestore.getInstance();
         fishPostRef = db.collection("Fish Posts");

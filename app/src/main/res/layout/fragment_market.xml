@@ -5,10 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/blue_white">
 
+    <include
+        android:id="@+id/market_toolbar"
+        layout="@layout/toolbar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/market_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/market_toolbar"
         android:padding="4sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
