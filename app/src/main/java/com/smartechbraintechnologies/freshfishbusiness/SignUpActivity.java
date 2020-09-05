@@ -26,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ExtendedFloatingActionButton next_btn;
     private TextView warning_tv;
 
-    private String phoneNumber, email, name, userType = "";
+    private String phoneNumber, email, name;
     private FirebaseFirestore db;
     private CollectionReference userRef;
 

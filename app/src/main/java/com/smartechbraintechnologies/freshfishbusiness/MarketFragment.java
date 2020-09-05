@@ -1,5 +1,6 @@
 package com.smartechbraintechnologies.freshfishbusiness;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
     private FloatingActionButton addNewFishBTN;
     private RecyclerView marketRecycler;
     private Toolbar toolbar;
+    private ProgressDialog mProgress;
 
 
     private FirebaseFirestore db;
@@ -60,20 +62,15 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
         return view;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
     private void setUpToolbar() {
-        toolbar.inflateMenu(R.menu.menu_market_toolbar);
-
+        toolbar.inflateMenu(R.menu.menu_toolbar_market);
+        toolbar.setTitle("Market");
         Menu menu = toolbar.getMenu();
-
-        MenuItem menuItem = menu.findItem(R.id.toolbar_search);
-
+        MenuItem menuItem = menu.findItem(R.id.search_item);
         SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setIconified(true);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -91,6 +88,8 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
 
 
     private void setUpRecycler() {
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
         fishPostRef.orderBy("fishPostTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -112,6 +111,7 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
             }
 
         });
+        mProgress.dismiss();
     }
 
 
@@ -119,6 +119,7 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
         addNewFishBTN = (FloatingActionButton) view.findViewById(R.id.add_new_fish_btn);
         marketRecycler = (RecyclerView) view.findViewById(R.id.market_recycler);
         toolbar = (Toolbar) view.findViewById(R.id.market_toolbar);
+        mProgress = new ProgressDialog(getContext());
 
         db = FirebaseFirestore.getInstance();
         fishPostRef = db.collection("Fish Posts");
@@ -133,4 +134,5 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
     public void onFishClick(int position) {
 
     }
+
 }

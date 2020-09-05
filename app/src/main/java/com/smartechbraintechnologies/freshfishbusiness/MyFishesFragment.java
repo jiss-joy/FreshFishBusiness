@@ -1,17 +1,23 @@
 package com.smartechbraintechnologies.freshfishbusiness;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,6 +33,10 @@ import java.util.ArrayList;
 public class MyFishesFragment extends Fragment implements ShortFishDetailsAdapter.OnFishSelectedListener {
 
     private RecyclerView marketRecycler;
+    private Toolbar toolbar;
+    private FloatingActionButton addBTN;
+    private ProgressDialog mProgress;
+
 
     private FirebaseFirestore db;
     private CollectionReference fishPostRef;
@@ -44,10 +54,45 @@ public class MyFishesFragment extends Fragment implements ShortFishDetailsAdapte
 
         setUpRecycler();
 
+        setUpToolbar();
+
+        addBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SelectNewFishActivity.class));
+            }
+        });
+
         return view;
     }
 
+    private void setUpToolbar() {
+        toolbar.inflateMenu(R.menu.menu_toolbar_market);
+        toolbar.setTitle("My Fishes");
+        Menu menu = toolbar.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.search_item);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setIconified(true);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
     private void setUpRecycler() {
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
         fishPostRef.orderBy("fishPostTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -72,11 +117,16 @@ public class MyFishesFragment extends Fragment implements ShortFishDetailsAdapte
             }
 
         });
+        mProgress.dismiss();
     }
 
 
     private void initValues(View view) {
         marketRecycler = (RecyclerView) view.findViewById(R.id.market_recycler);
+        toolbar = (Toolbar) view.findViewById(R.id.my_fish_toolbar);
+        addBTN = (FloatingActionButton) view.findViewById(R.id.my_fishes_add_btn);
+        mProgress = new ProgressDialog(getContext());
+
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

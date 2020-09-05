@@ -161,7 +161,7 @@ public class EditFishPostActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         mProgress.dismiss();
-                        Toast.makeText(EditFishPostActivity.this, "Successfully Posted.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditFishPostActivity.this, "Successfully Updated.", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(EditFishPostActivity.this, MainActivity.class));
                     }
                 });
@@ -170,7 +170,7 @@ public class EditFishPostActivity extends AppCompatActivity {
     }
 
     private void updateFishwithPic() {
-        mProgress.setMessage("Posting Fish on the Market...");
+        mProgress.setMessage("Updating Fish on the Market...");
         mProgress.show();
         final StorageReference filepath = mStorageRef.child(Objects.requireNonNull(fishImage.getLastPathSegment()));
         filepath.putFile(fishImage)
@@ -206,7 +206,7 @@ public class EditFishPostActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         mProgress.dismiss();
-                                                        Toast.makeText(EditFishPostActivity.this, "Successfully Posted.", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(EditFishPostActivity.this, "Successfully Updated.", Toast.LENGTH_SHORT).show();
                                                         startActivity(new Intent(EditFishPostActivity.this, MainActivity.class));
                                                     }
                                                 });
@@ -221,7 +221,7 @@ public class EditFishPostActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(EditFishPostActivity.this, "Upload Unsuccessful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditFishPostActivity.this, "Update Unsuccessful", Toast.LENGTH_SHORT).show();
                         mProgress.dismiss();
                     }
                 });
@@ -278,7 +278,6 @@ public class EditFishPostActivity extends AppCompatActivity {
             cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                 }
             });
             dialog.show();
@@ -286,6 +285,8 @@ public class EditFishPostActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
         fishPostRef.document(fishID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -311,6 +312,7 @@ public class EditFishPostActivity extends AppCompatActivity {
                     oos_btn.setTextColor(Color.parseColor("#FFFFFF"));
                     oos_btn.setBackgroundColor(Color.parseColor("#FF0000"));
                 }
+                mProgress.dismiss();
             }
         });
     }
@@ -428,6 +430,7 @@ public class EditFishPostActivity extends AppCompatActivity {
         fish_location = (EditText) findViewById(R.id.edit_fish_location);
         mStorageRef = FirebaseStorage.getInstance().getReference().child("Market Fish Photos");
         mProgress = new ProgressDialog(this);
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();

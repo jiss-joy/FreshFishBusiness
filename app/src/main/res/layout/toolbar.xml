@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    app:elevation="10sp"
-    app:title="MARKET"
+    app:elevation="10dp"
+    app:title="Title"
     app:titleTextAppearance="@style/ToolbarTitle"
     app:titleTextColor="@color/color_White">
 
