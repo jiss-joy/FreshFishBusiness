@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Malayalam   -->
+    <!--    Authentication Bridge   -->
+    <string name="title1">ഫ്രഷ് ഫിഷ്</string>
+    <string name="title2">ബിസിനസ്സ്</string>
+    <string name="account">അക്കൗണ്ട്</string>
+    <string name="account_instructions">തുടരാൻ ഫോണിൽ സൈൻ ഇൻ ചെയ്യുക അല്ലെങ്കിൽ സൈൻ അപ്പ് ചെയ്യുക.</string>
+    <string name="account_sign_in">നിലവിലുള്ള ഉപയോക്താവ്? സൈൻ ഇൻ</string>
+    <string name="account_sign_up">പുതിയ ഉപയോക്താവ്? സൈൻ അപ്പ് ചെയ്യുക</string>
+</resources>

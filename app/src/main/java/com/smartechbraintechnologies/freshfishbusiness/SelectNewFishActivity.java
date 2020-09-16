@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SelectNewFishActivity extends AppCompatActivity implements SelectFishAdapter.OnFishSelectedListener {
+public class SelectNewFishActivity extends AppCompatActivity implements AdapterSelectFish.OnFishSelectedListener {
 
     private RecyclerView selectFishRecycler;
     private FloatingActionButton selectFishBTN;
@@ -34,7 +34,7 @@ public class SelectNewFishActivity extends AppCompatActivity implements SelectFi
     private CollectionReference fishRef;
     private ArrayList<SelectFishModel> fishList = new ArrayList<>();
     private ArrayList<Integer> fishCounter = new ArrayList<>();
-    private SelectFishAdapter mAdapter;
+    private AdapterSelectFish mAdapter;
     private String selectedFish = "";
 
 
@@ -73,14 +73,22 @@ public class SelectNewFishActivity extends AppCompatActivity implements SelectFi
                     fishList.add(fish);
                     fishCounter.add(0);
                 }
-                fishList.sort(new Comparator<SelectFishModel>() {
+
+                Collections.sort(fishList, new Comparator<SelectFishModel>() {
                     @Override
-                    public int compare(SelectFishModel t1, SelectFishModel t2) {
-                        return t1.getFishName().compareTo(t2.getFishName());
+                    public int compare(SelectFishModel f1, SelectFishModel f2) {
+                        return f1.getFishName().compareTo(f2.getFishName());
                     }
                 });
 
-                mAdapter = new SelectFishAdapter(SelectNewFishActivity.this, fishList, fishCounter, SelectNewFishActivity.this);
+//                fishList.sort(new Comparator<SelectFishModel>() {
+//                    @Override
+//                    public int compare(SelectFishModel t1, SelectFishModel t2) {
+//                        return t1.getFishName().compareTo(t2.getFishName());
+//                    }
+//                });
+
+                mAdapter = new AdapterSelectFish(SelectNewFishActivity.this, fishList, fishCounter, SelectNewFishActivity.this);
                 selectFishRecycler.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -107,7 +115,7 @@ public class SelectNewFishActivity extends AppCompatActivity implements SelectFi
         fishCounter.set(position, 1);
         Toast.makeText(this, fishName + " Selected", Toast.LENGTH_SHORT).show();
         selectedFish = fishName;
-        mAdapter = new SelectFishAdapter(SelectNewFishActivity.this, fishList, fishCounter, SelectNewFishActivity.this);
+        mAdapter = new AdapterSelectFish(SelectNewFishActivity.this, fishList, fishCounter, SelectNewFishActivity.this);
         selectFishRecycler.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         selectFishRecycler.setAdapter(mAdapter);
     }

@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView name, number, id, editBTN, logOutBTN;
+    private TextView name, number, id, email, editBTN, logOutBTN;
     private TextView addressBTN, pastOrdersBTN, helpBTN, constactUsBTN, tosBTN, privacyBTN;
     private ProgressDialog mProgress;
 
@@ -68,6 +68,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                getActivity().finish();
                 startActivity(new Intent(getActivity(), AuthenticationBridgeActivity.class));
             }
         });
@@ -89,6 +90,7 @@ public class ProfileFragment extends Fragment {
                 DocumentSnapshot documentSnapshot = task.getResult();
                 name.setText(documentSnapshot.getString("sellerName"));
                 number.setText(documentSnapshot.getString("sellerPhone"));
+                email.setText(documentSnapshot.getString("sellerEmail"));
                 id.setText("ID: " + documentSnapshot.getString("sellerID"));
                 mProgress.dismiss();
             }
@@ -98,6 +100,7 @@ public class ProfileFragment extends Fragment {
     private void initValues(View view) {
         name = (TextView) view.findViewById(R.id.profile_name);
         number = (TextView) view.findViewById(R.id.profile_number);
+        email = (TextView) view.findViewById(R.id.profile_email);
         id = (TextView) view.findViewById(R.id.profile_user_id);
         editBTN = (TextView) view.findViewById(R.id.profile_edit_btn);
         addressBTN = (TextView) view.findViewById(R.id.profile_address_btn);

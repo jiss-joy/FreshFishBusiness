@@ -1,9 +1,7 @@
 package com.smartechbraintechnologies.freshfishbusiness;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -11,6 +9,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText phoneNumber_et, email_et, name_et;
     private ExtendedFloatingActionButton next_btn;
     private TextView warning_tv;
+    private ProgressDialog mProgress;
 
     private String phoneNumber, email, name;
     private FirebaseFirestore db;
@@ -115,6 +117,8 @@ public class SignUpActivity extends AppCompatActivity {
                     warning_tv.setText("A USER ALREADY EXISTS.");
                     warning_tv.setVisibility(View.VISIBLE);
                 } else {
+                    mProgress.setMessage("Verifying number...");
+                    mProgress.show();
                     Intent intent = new Intent(SignUpActivity.this, VerifyOtpActivity.class);
                     intent.putExtra("PHONE NUMBER", phoneNumber);
                     intent.putExtra("EMAIL", email);
@@ -137,6 +141,8 @@ public class SignUpActivity extends AppCompatActivity {
         next_btn = (ExtendedFloatingActionButton) findViewById(R.id.sign_up_next_btn);
         warning_tv = (TextView) findViewById(R.id.signup_warning_tv);
         warning_tv.setVisibility(View.INVISIBLE);
+        mProgress = new ProgressDialog(this);
+        mProgress.setCancelable(false);
 
         db = FirebaseFirestore.getInstance();
         userRef = db.collection("Users");
@@ -144,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         startActivity(new Intent(SignUpActivity.this, AuthenticationBridgeActivity.class));
     }
 }

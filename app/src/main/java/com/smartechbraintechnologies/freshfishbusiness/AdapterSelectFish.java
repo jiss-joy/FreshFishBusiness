@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class SelectFishAdapter extends RecyclerView.Adapter<SelectFishAdapter.MyViewHolder> {
+public class AdapterSelectFish extends RecyclerView.Adapter<AdapterSelectFish.MyViewHolder> {
 
     private Context context;
     private ArrayList<SelectFishModel> FishList;
@@ -21,7 +21,7 @@ public class SelectFishAdapter extends RecyclerView.Adapter<SelectFishAdapter.My
     private int mPosition;
     private int indicator = 0;
 
-    public SelectFishAdapter(Context context, ArrayList<SelectFishModel> fishList, ArrayList<Integer> fishCounter, OnFishSelectedListener onFishSelectedListener) {
+    public AdapterSelectFish(Context context, ArrayList<SelectFishModel> fishList, ArrayList<Integer> fishCounter, OnFishSelectedListener onFishSelectedListener) {
         this.context = context;
         FishList = fishList;
         FishCounter = fishCounter;
@@ -33,10 +33,10 @@ public class SelectFishAdapter extends RecyclerView.Adapter<SelectFishAdapter.My
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (FishCounter.get(mPosition) == 0) {
             indicator = 0;
-            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.select_fish_item, parent, false), onFishSelectedListener);
+            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_select_fish, parent, false), onFishSelectedListener);
         } else {
             indicator = 1;
-            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.select_fish_item_selected, parent, false), onFishSelectedListener);
+            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_select_fish_selected, parent, false), onFishSelectedListener);
         }
     }
 

@@ -26,7 +26,7 @@
             android:hint="Enter OTP"
             android:inputType="number"
             android:padding="10sp"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorSecondary" />
 
         <TextView
             android:id="@+id/otp_text"

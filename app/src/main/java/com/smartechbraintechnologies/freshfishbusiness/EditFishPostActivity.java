@@ -41,7 +41,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -146,14 +147,17 @@ public class EditFishPostActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot documentSnapshot = task.getResult();
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                Calendar calendar = Calendar.getInstance();
+                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                String currentTime = DateFormat.getTimeInstance().format(calendar.getTime());
                 String sellerName = documentSnapshot.getString("sellerName");
 
                 fishPost.put("fishAvailability", fishAvailability);
                 fishPost.put("fishLocation", fishLocation);
                 fishPost.put("fishName", fishName);
                 fishPost.put("fishPrice", fishPrice);
-                fishPost.put("fishPostTime", timestamp);
+                fishPost.put("fishPostDate", currentDate);
+                fishPost.put("fishPostTime", currentTime);
                 fishPost.put("sellerName", sellerName);
                 fishPost.put("sellerID", currentUser.getUid());
 
@@ -190,7 +194,9 @@ public class EditFishPostActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 DocumentSnapshot documentSnapshot = task.getResult();
-                                                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                                                Calendar calendar = Calendar.getInstance();
+                                                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                                                String currentTime = DateFormat.getTimeInstance().format(calendar.getTime());
                                                 String sellerName = documentSnapshot.getString("sellerName");
 
                                                 fishPost.put("fishAvailability", fishAvailability);
@@ -198,7 +204,8 @@ public class EditFishPostActivity extends AppCompatActivity {
                                                 fishPost.put("fishLocation", fishLocation);
                                                 fishPost.put("fishName", fishName);
                                                 fishPost.put("fishPrice", fishPrice);
-                                                fishPost.put("fishPostTime", timestamp);
+                                                fishPost.put("fishPostDate", currentDate);
+                                                fishPost.put("fishPostTime", currentTime);
                                                 fishPost.put("sellerName", sellerName);
                                                 fishPost.put("sellerID", currentUser.getUid());
 
@@ -428,9 +435,9 @@ public class EditFishPostActivity extends AppCompatActivity {
         fish_name = (EditText) findViewById(R.id.edit_fish_name);
         fish_price = (EditText) findViewById(R.id.edit_fish_price);
         fish_location = (EditText) findViewById(R.id.edit_fish_location);
-        mStorageRef = FirebaseStorage.getInstance().getReference().child("Market Fish Photos");
         mProgress = new ProgressDialog(this);
 
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("Market Fish Photos");
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();

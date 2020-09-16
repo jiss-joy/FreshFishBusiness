@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShortFishDetailsAdapter extends RecyclerView.Adapter<ShortFishDetailsAdapter.MyViewHolder> implements Filterable {
+public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFishDetails.MyViewHolder> implements Filterable {
 
     private Context context;
     private ArrayList<ShortFishDetailsModel> FishList;
@@ -27,7 +27,7 @@ public class ShortFishDetailsAdapter extends RecyclerView.Adapter<ShortFishDetai
 
     private int mPosition;
 
-    public ShortFishDetailsAdapter(Context context, ArrayList<ShortFishDetailsModel> fishList, OnFishSelectedListener onFishSelectedListener) {
+    public AdapterShortFishDetails(Context context, ArrayList<ShortFishDetailsModel> fishList, OnFishSelectedListener onFishSelectedListener) {
         this.context = context;
         this.FishList = fishList;
         FishListFull = new ArrayList<>(fishList);
@@ -37,14 +37,14 @@ public class ShortFishDetailsAdapter extends RecyclerView.Adapter<ShortFishDetai
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.short_fish_details_item, parent, false), onFishSelectedListener);
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_short_fish_details, parent, false), onFishSelectedListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Picasso.get().load(FishList.get(position).getFishImage()).fit().centerCrop().into(holder.fish_image);
         holder.fish_name.setText(FishList.get(position).getFishName());
-        holder.fish_price.setText("Rs." + FishList.get(position).getFishPrice() + "/kg");
+        holder.fish_price.setText("₹" + FishList.get(position).getFishPrice() + "/KG");
         if (FishList.get(position).getFishAvailability().equals("Available")) {
             holder.fish_availability.setTextColor(Color.parseColor("#00FF0C"));
         } else {

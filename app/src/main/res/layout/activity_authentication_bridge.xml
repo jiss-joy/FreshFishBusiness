@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/carter_one"
-            android:text="FRESH FISH"
+            android:text="@string/title1"
             android:textColor="@color/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_below="@id/fresh_tv"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/knewave"
-            android:text="BUSINESS"
+            android:text="@string/title2"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -60,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
         android:elevation="6dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25sp"
             android:fontFamily="@font/architects_daughter"
-            android:text="ACCOUNT"
+            android:text="@string/account"
             android:textColor="@color/color_black"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -79,21 +79,21 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
             android:fontFamily="@font/architects_daughter"
-            android:text="Sign In or Sign Up with phone to continue."
+            android:gravity="center"
+            android:text="@string/account_instructions"
             android:textColor="@color/color_black"
             android:textSize="16sp" />
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/auth_sign_in"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35sp"
             android:fontFamily="@font/architects_daughter"
             android:gravity="center"
-            android:text="EXISTING USER? SIGN IN"
+            android:text="@string/account_sign_in"
             android:textColor="@color/color_White"
-            android:textSize="16sp"
             android:textStyle="bold"
             app:backgroundTint="@color/colorPrimary"
             app:rippleColor="@color/color_White" />
@@ -111,13 +111,13 @@
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/auth_sign_up"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35sp"
             android:layout_marginBottom="25sp"
             android:fontFamily="@font/architects_daughter"
             android:gravity="center"
-            android:text="NEW USER? SIGN UP"
+            android:text="@string/account_sign_up"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"

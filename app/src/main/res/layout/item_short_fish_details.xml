@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/short_fish_details_pic"
-            android:layout_width="90sp"
-            android:layout_height="90sp"
+            android:layout_width="80sp"
+            android:layout_height="80sp"
             android:layout_centerVertical="true"
             android:layout_margin="8sp"
             android:src="@drawable/default_fish" />
@@ -32,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="FISH NAME"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
+                android:textColor="@color/color_black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -42,8 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4sp"
                 android:fontFamily="@font/ubuntu"
-                android:text="FISH PRICE"
-                android:textColor="@color/colorPrimary" />
+                android:text="FISH PRICE" />
 
             <TextView
                 android:id="@+id/short_fish_details_availability"
@@ -51,8 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4sp"
                 android:fontFamily="@font/ubuntu"
-                android:text="FISH AVAILABILITY"
-                android:textColor="@color/colorPrimary" />
+                android:text="FISH AVAILABILITY" />
 
             <TextView
                 android:id="@+id/short_fish_details_location"
@@ -60,13 +58,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4sp"
                 android:fontFamily="@font/ubuntu"
-                android:text="FISH LOCATION"
-                android:textColor="@color/colorPrimary" />
+                android:text="FISH LOCATION" />
 
         </LinearLayout>
 
-
     </RelativeLayout>
-
 
 </androidx.cardview.widget.CardView>

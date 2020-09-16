@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Fresh Fish Business</string>
+
+    <!--    English -->
+    <!--    Authentication Bridge-->
+    <string name="title1">Fresh Fish</string>
+    <string name="title2">Business</string>
+    <string name="account">Account</string>
+    <string name="account_instructions">Sign In or Sign Up with phone to continue.</string>
+    <string name="account_sign_in">EXISTING USER? SIGN IN</string>
+    <string name="account_sign_up">NEW USER? SIGN UP</string>
+
 </resources>

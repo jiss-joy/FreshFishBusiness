@@ -42,7 +42,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -184,6 +185,7 @@ public class AddNewFishActivity extends AppCompatActivity {
 
     private void uploadFish() {
         mProgress.setMessage("Posting Fish on the Market...");
+        mProgress.setCancelable(false);
         mProgress.show();
         final StorageReference filepath = mStorageRef.child(Objects.requireNonNull(fishImage.getLastPathSegment()));
         filepath.putFile(fishImage)
@@ -203,7 +205,9 @@ public class AddNewFishActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 DocumentSnapshot documentSnapshot = task.getResult();
-                                                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                                                Calendar calendar = Calendar.getInstance();
+                                                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                                                String currentTime = DateFormat.getTimeInstance().format(calendar.getTime());
                                                 String sellerName = documentSnapshot.getString("sellerName");
 
                                                 fishPost.put("fishAvailability", fishAvailability);
@@ -211,7 +215,8 @@ public class AddNewFishActivity extends AppCompatActivity {
                                                 fishPost.put("fishLocation", fishLocation);
                                                 fishPost.put("fishName", fishName);
                                                 fishPost.put("fishPrice", fishPrice);
-                                                fishPost.put("fishPostTime", timestamp);
+                                                fishPost.put("fishPostDate", currentDate);
+                                                fishPost.put("fishPostTime", currentTime);
                                                 fishPost.put("sellerName", sellerName);
                                                 fishPost.put("sellerID", currentUser.getUid());
 

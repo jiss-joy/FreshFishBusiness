@@ -8,7 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,21 +27,24 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.OnFishSelectedListener {
+public class MarketFragment extends Fragment implements AdapterShortFishDetails.OnFishSelectedListener {
 
     private FloatingActionButton addNewFishBTN;
     private RecyclerView marketRecycler;
     private Toolbar toolbar;
     private ProgressDialog mProgress;
+    private ImageView noFishImage;
+    private TextView noFishTV;
 
 
     private FirebaseFirestore db;
     private CollectionReference fishPostRef;
     private ArrayList<ShortFishDetailsModel> fishDetailsList = new ArrayList<>();
-    private ShortFishDetailsAdapter mAdapter;
+    private AdapterShortFishDetails mAdapter;
 
     @Nullable
     @Override
@@ -105,9 +110,19 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
                     ShortFishDetailsModel fishDetail = new ShortFishDetailsModel(fishID, fishImage, fishName, fishPrice, fishAvailability, fishLocation);
                     fishDetailsList.add(fishDetail);
                 }
-                mAdapter = new ShortFishDetailsAdapter(getContext(), fishDetailsList, MarketFragment.this);
-                marketRecycler.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
+                if (fishDetailsList.isEmpty()) {
+                    marketRecycler.setVisibility(View.GONE);
+                    Picasso.get().load(R.drawable.empty_fish).into(noFishImage);
+                    noFishTV.setText("You have not posted any fishes until now\n" +
+                            "Tap the '+' button to add a new fish");
+                } else {
+                    noFishTV.setVisibility(View.GONE);
+                    noFishImage.setVisibility(View.GONE);
+                    mAdapter = new AdapterShortFishDetails(getContext(), fishDetailsList, MarketFragment.this);
+                    marketRecycler.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+
             }
 
         });
@@ -120,6 +135,9 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
         marketRecycler = (RecyclerView) view.findViewById(R.id.market_recycler);
         toolbar = (Toolbar) view.findViewById(R.id.market_toolbar);
         mProgress = new ProgressDialog(getContext());
+        noFishImage = (ImageView) view.findViewById(R.id.market_no_fish_image);
+        noFishTV = (TextView) view.findViewById(R.id.market_no_fish_tv);
+
 
         db = FirebaseFirestore.getInstance();
         fishPostRef = db.collection("Fish Posts");
@@ -132,7 +150,10 @@ public class MarketFragment extends Fragment implements ShortFishDetailsAdapter.
 
     @Override
     public void onFishClick(int position) {
-
+        String fishID = fishDetailsList.get(position).getFishID();
+        Intent intent = new Intent(getContext(), FullFishDetails.class);
+        intent.putExtra("FISH ID", fishID);
+        startActivity(intent);
     }
 
 }

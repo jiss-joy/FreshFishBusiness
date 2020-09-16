@@ -1,12 +1,16 @@
 package com.smartechbraintechnologies.freshfishbusiness;
 
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,6 +20,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     public static final int PERMISSIONS_REQUEST_CODE = 1;
+
+    public static final String CHANNEL_ID = "freshfishbusinessNotifications";
+    public static final String CHANNEL_NAME = "FreshFishHub";
+    public static final String CHANNEL_DESC = "Welcome Notification";
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -31,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketFragment()).commit();
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(CHANNEL_DESC);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -73,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
     private void initValues() {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+    }
 
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
     }
 }

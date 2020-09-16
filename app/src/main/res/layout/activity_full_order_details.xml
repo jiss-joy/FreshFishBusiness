@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_white"
+    tools:context=".FullOrderDetailsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/full_order_layout_3"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:text="ORDER DETAILS"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4sp"
+                app:cardCornerRadius="6sp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10sp">
+
+                    <TextView
+                        android:id="@+id/full_order_fish_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="Fish Name"
+                        android:textColor="@color/color_black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/full_order_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10sp"
+                        android:background="@drawable/custom_field"
+                        android:fontFamily="@font/ubuntu"
+                        android:padding="6sp"
+                        android:text="Order Status"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="10sp" />
+
+                    <View
+                        android:id="@+id/full_order_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/full_order_fish_name"
+                        android:layout_marginTop="5sp"
+                        android:background="@color/blue_white" />
+
+                    <TextView
+                        android:id="@+id/full_order_price_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_view1"
+                        android:layout_marginVertical="5sp"
+                        android:text="Price:"
+                        android:textColor="@color/color_black" />
+
+                    <TextView
+                        android:id="@+id/full_order_qty_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_price_tv"
+                        android:layout_marginVertical="5sp"
+                        android:text="Quantity:"
+                        android:textColor="@color/color_black" />
+
+                    <TextView
+                        android:id="@+id/full_order_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_qty_tv"
+                        android:layout_marginVertical="5sp"
+                        android:text="Time:"
+                        android:textColor="@color/color_black" />
+
+                    <TextView
+                        android:id="@+id/full_order_date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_time_tv"
+                        android:layout_marginVertical="5sp"
+                        android:text="Date:"
+                        android:textColor="@color/color_black" />
+
+
+                    <TextView
+                        android:id="@+id/full_order_total_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_date_tv"
+                        android:layout_marginVertical="5sp"
+                        android:text="Order Total:"
+                        android:textColor="@color/color_black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/full_order_fish_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_view1"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginVertical="5sp"
+                        android:text="₹200.00"
+                        android:textColor="@color/color_black" />
+
+                    <TextView
+                        android:id="@+id/full_order_fish_qty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_fish_price"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginVertical="5sp"
+                        android:text="2Kg"
+                        android:textColor="@color/color_black" />
+
+                    <TextView
+                        android:id="@+id/full_order_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_fish_qty"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginVertical="5sp"
+                        android:text="2:35:29 pm"
+                        android:textColor="@color/color_black" />
+
+                    <TextView
+                        android:id="@+id/full_order_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_time"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginVertical="5sp"
+                        android:text="24th September"
+                        android:textColor="@color/color_black" />
+
+
+                    <TextView
+                        android:id="@+id/full_order_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_date"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginVertical="5sp"
+                        android:text="₹400"
+                        android:textColor="@color/color_black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:text="Delivery Address:"
+                android:textColor="@color/color_black" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/full_order_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4sp"
+                app:cardCornerRadius="6sp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10sp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/full_order_address_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="Consumer Name"
+                        android:textColor="@color/color_black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/full_order_address_building"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_name"
+                        android:layout_marginTop="5sp"
+                        android:text="Address Building"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/full_order_address_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_building"
+                        android:text="Address Area"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/full_order_address_landmark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_state"
+                        android:text="Address Landmark"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/full_order_address_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_area"
+                        android:text="Address City"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/full_order_address_pin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_area"
+                        android:layout_marginStart="7sp"
+                        android:layout_toEndOf="@id/full_order_address_city"
+                        android:text="Address Pin"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/full_order_address_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_city"
+                        android:text="Kerala,"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/full_order_address_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/full_order_address_city"
+                        android:layout_marginStart="7sp"
+                        android:layout_toEndOf="@id/full_order_address_state"
+                        android:text="India"
+                        android:textColor="@color/color_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/full_order_layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/full_order_accept_order_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="ACCEPT ORDER"
+            android:textColor="@color/color_White"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_green"
+            app:rippleColor="@color/color_White" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/full_order_decline_order_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="DECLINE ORDER"
+            android:textColor="@color/color_White"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_red"
+            app:rippleColor="@color/color_White" />
+
+    </LinearLayout>
+
+</RelativeLayout>

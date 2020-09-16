@@ -1,10 +1,7 @@
 package com.smartechbraintechnologies.freshfishbusiness;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +10,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,10 +40,12 @@ public class SignInActivity extends AppCompatActivity {
     private EditText phoneNumber_et;
     private ExtendedFloatingActionButton nextBTN;
     private TextView warning_tv;
+    private ProgressDialog mProgress;
 
     private String phoneNumber;
     private FirebaseFirestore db;
     private CollectionReference userRef;
+    private CollectionReference consumerReference;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
@@ -69,6 +74,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void checkNumberWithDatabase() {
+        mProgress.setMessage("Verifying number...");
+        mProgress.show();
         userRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -83,13 +90,13 @@ public class SignInActivity extends AppCompatActivity {
                 if (flag) {
                     sendOTP();
                 } else {
+                    mProgress.dismiss();
                     Toast.makeText(SignInActivity.this, "No User with this number found\nPlease Sign Up.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                 }
 
             }
         });
-
     }
 
 
@@ -108,7 +115,7 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(SignInActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignInActivity.this, "" + e, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignInActivity.this, AuthenticationBridgeActivity.class));
                     }
 
@@ -130,12 +137,15 @@ public class SignInActivity extends AppCompatActivity {
                                 if (userOTP.isEmpty()) {
                                     Toast.makeText(SignInActivity.this, "Please enter OTP", Toast.LENGTH_SHORT).show();
                                 } else {
+                                    mProgress.setMessage("Authenticating...");
+                                    mProgress.show();
                                     PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(sentOTP, userOTP);
                                     signInUser(phoneAuthCredential);
                                 }
                             }
                         });
                         otp_tv.setText("We have sent an OTP to +91-" + phoneNumber);
+                        mProgress.dismiss();
                         dialog.show();
                     }
                 });
@@ -147,9 +157,23 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (task.isSuccessful()) {
+                                        String token = task.getResult().getToken();
+                                        consumerReference.document(mAuth.getCurrentUser().getUid()).update("consumerDeviceToken", token);
+                                        userRef.document(mAuth.getCurrentUser().getUid()).update("userDeviceToken", token);
+                                        mProgress.dismiss();
+                                        Toast.makeText(SignInActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                                        finishActivity(1);
+                                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                    }
+                                }
+                            });
                         } else {
-                            Toast.makeText(SignInActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            mProgress.dismiss();
+                            Toast.makeText(SignInActivity.this, "task failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -160,10 +184,12 @@ public class SignInActivity extends AppCompatActivity {
         nextBTN = (ExtendedFloatingActionButton) findViewById(R.id.sign_in_next_btn);
         warning_tv = (TextView) findViewById(R.id.signin_warning_tv);
         warning_tv.setVisibility(View.INVISIBLE);
+        mProgress = new ProgressDialog(this);
+        mProgress.setCancelable(false);
 
         db = FirebaseFirestore.getInstance();
         userRef = db.collection("Users");
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        consumerReference = db.collection("Consumers");
     }
 }
